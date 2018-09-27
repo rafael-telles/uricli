@@ -32,6 +32,7 @@ setup(
         "requests==2.19.1",
         "mechanicalSoup==0.11.0",
         "demjson==2.2.4",
+        "websocket-client==0.53.0"
     ],
     url="https://github.com/rafael-telles/uri-cli",
 )

@@ -7,6 +7,7 @@ Usage:
   uri login
   uri set_language
   uri submit <solution_path> [<problem_id>]
+  uri live
 
 Arguments
     <solution_path>     Path to the file containing to solution.
@@ -17,9 +18,12 @@ Arguments
 from docopt import docopt
 from PyInquirer import prompt
 
-from . import lib
 
-__version__ = "0.1.2"
+from . import lib
+from .live import LiveSession
+
+
+__version__ = "0.2.0"
 
 
 def cmd_login():
@@ -69,6 +73,11 @@ def cmd_submit(arguments):
     lib.submit(solution_path, problem_id)
 
 
+def cmd_live():
+    session = LiveSession()
+    session.run()
+
+
 def cmd_help():
     print(__doc__)
 
@@ -76,21 +85,23 @@ def cmd_help():
 def main():
     try:
         arguments = docopt(__doc__, help=False, version=__version__)
-
-        try:
-            if arguments["login"]:
-                cmd_login()
-            elif arguments["set_language"]:
-                cmd_set_language()
-            elif arguments["submit"]:
-                cmd_submit(arguments)
-            else:
-                cmd_help()
-        except Exception as e:
-            print(e)
-            exit(1)
     except SystemExit:
         cmd_help()
+        exit(1)
+
+    try:
+        if arguments["login"]:
+            cmd_login()
+        elif arguments["set_language"]:
+            cmd_set_language()
+        elif arguments["submit"]:
+            cmd_submit(arguments)
+        elif arguments["live"]:
+            cmd_live()
+        else:
+            cmd_help()
+    except Exception as e:
+        print(e)
         exit(1)
 
 
