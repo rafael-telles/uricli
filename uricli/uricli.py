@@ -22,8 +22,7 @@ from PyInquirer import prompt
 
 from . import lib
 
-
-__version__ = "0.0.7"
+__version__ = "0.1.1"
 
 
 def cmd_login():
@@ -62,6 +61,11 @@ def cmd_set_language():
 
 
 def cmd_submit(arguments):
+    try:
+        lib.get_language()
+    except:
+        cmd_set_language()  # Ensure language is set first
+
     solution_path = arguments["<solution_path>"]
     problem_id = arguments["<problem_id>"]
 

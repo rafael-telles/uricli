@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import re
 import shelve
 
 try:
@@ -11,6 +11,7 @@ except (ImportError, AttributeError):
 
 import requests
 import mechanicalsoup
+import demjson
 
 DATA_DIR = Path.home().joinpath(".uricli")
 if not DATA_DIR.exists():
@@ -22,7 +23,7 @@ SHELVE_PATH = str(DATA_DIR.joinpath('config'))
 def restore_session():
     session = requests.session()
     with shelve.open(SHELVE_PATH) as db:
-        if "cookies" in db:
+        if not db.get("cookies", None):
             cookies = requests.utils.cookiejar_from_dict(db["cookies"])
             session.cookies = cookies
 
@@ -61,13 +62,22 @@ def submit(solution_path, problem_id):
     browser['language_id'] = language
 
     browser.submit_selected()
+    print_toast(browser)
+
+
+def print_toast(browser):
+    html = str(browser.get_current_page())
+    toast_data = re.findall("show\((\{[^\})]+\})", html)
+    if toast_data:
+        toast_data = demjson.decode(toast_data[0])
+        print(toast_data['message'])
 
 
 def set_login(email, password):
     with shelve.open(SHELVE_PATH) as db:
         db['email'] = email
         db['password'] = password
-        del db['cookies']
+        db['cookies'] = None
         db.sync()
 
 
@@ -90,6 +100,7 @@ def ensure_logged_in(browser):
         browser.submit_selected()
 
     if browser.get_url().endswith("/login"):
+        print_toast(browser)
         raise RuntimeError("Failed to login.")
 
     save_session(browser.session)
