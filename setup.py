@@ -15,9 +15,6 @@ version = re.search(
 with open("README.md", "rb") as f:
     long_descr = f.read().decode("utf-8")
 
-with open('requirements.txt') as f:
-    requirements = f.read().splitlines()
-
 setup(
     name="uricli",
     packages=["uricli"],
@@ -29,6 +26,11 @@ setup(
     long_description=long_descr,
     author="Rafael Telles",
     author_email="rafael@telles.pw",
-    install_requires=requirements,
+    install_requires=[
+        "docopt==0.6.2",
+        "PyInquirer==1.0.2",
+        "requests==2.19.1",
+        "mechanicalSoup==0.11.0",
+    ],
     url="https://github.com/rafael-telles/uri-cli",
 )

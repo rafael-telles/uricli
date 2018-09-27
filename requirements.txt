@@ -1,4 +1,1 @@
-docopt==0.6.2
-PyInquirer==1.0.2
-requests==2.19.1
-mechanicalSoup==0.11.0
+.

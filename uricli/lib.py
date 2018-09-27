@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import shelve
-from pathlib import Path
+
+try:
+    from pathlib import Path
+
+    Path().expanduser()
+except (ImportError, AttributeError):
+    from pathlib2 import Path  # Patch for Python 2.x
 
 import requests
 import mechanicalsoup

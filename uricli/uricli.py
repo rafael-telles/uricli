@@ -20,10 +20,10 @@ Options:
 from docopt import docopt
 from PyInquirer import prompt
 
-from uricli import lib
+from . import lib
 
 
-__version__ = "0.0.1"
+__version__ = "0.0.6"
 
 
 def cmd_login():
