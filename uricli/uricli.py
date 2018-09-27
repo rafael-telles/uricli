@@ -1,23 +1,29 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 """
 URI Online Judge Command Line Interface
 
 Usage:
-  uri.py login
-  uri.py set_language
-  uri.py submit <solution_path> [<problem_id>]
-  uri.py (-h | --help)
+  uri login
+  uri set_language
+  uri submit <solution_path> [<problem_id>]
+  uri (-h | --help)
+  uri (-v | --version)
 
 Options:
-  -h --help     Show this screen.
+  -h --help      Show this screen.
+  -v --version   Show version.
 
 """
 
 from docopt import docopt
 from PyInquirer import prompt
 
-import lib
+from uricli import lib
+
+
+__version__ = "0.0.1"
 
 
 def cmd_login():
@@ -62,11 +68,15 @@ def cmd_submit(arguments):
     lib.submit(solution_path, problem_id)
 
 
-if __name__ == "__main__":
-    arguments = docopt(__doc__)
+def main():
+    arguments = docopt(__doc__, version=__version__)
     if arguments["login"]:
         cmd_login()
     elif arguments["set_language"]:
         cmd_set_language()
     elif arguments["submit"]:
         cmd_submit(arguments)
+
+
+if __name__ == "__main__":
+    main()

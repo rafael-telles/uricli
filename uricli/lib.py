@@ -1,10 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import shelve
 from pathlib import Path
-from time import sleep
 
 import requests
 import mechanicalsoup
-from bs4 import BeautifulSoup
 
 DATA_DIR = Path.home().joinpath(".uricli")
 if not DATA_DIR.exists():
