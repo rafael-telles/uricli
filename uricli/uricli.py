@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-URI Online Judge Command Line Interface
+"""URI Online Judge Command Line Interface
 
 Usage:
   uri login
   uri set_language
   uri submit <solution_path> [<problem_id>]
-  uri (-h | --help)
-  uri (-v | --version)
 
-Options:
-  -h --help      Show this screen.
-  -v --version   Show version.
+Arguments
+    <solution_path>     Path to the file containing to solution.
+    <problem_id>        URI Online Judge's problem ID
 
 """
 
@@ -22,7 +19,7 @@ from PyInquirer import prompt
 
 from . import lib
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 def cmd_login():
@@ -72,17 +69,28 @@ def cmd_submit(arguments):
     lib.submit(solution_path, problem_id)
 
 
+def cmd_help():
+    print(__doc__)
+
+
 def main():
-    arguments = docopt(__doc__, version=__version__)
     try:
-        if arguments["login"]:
-            cmd_login()
-        elif arguments["set_language"]:
-            cmd_set_language()
-        elif arguments["submit"]:
-            cmd_submit(arguments)
-    except Exception as e:
-        print(e)
+        arguments = docopt(__doc__, help=False, version=__version__)
+
+        try:
+            if arguments["login"]:
+                cmd_login()
+            elif arguments["set_language"]:
+                cmd_set_language()
+            elif arguments["submit"]:
+                cmd_submit(arguments)
+            else:
+                cmd_help()
+        except Exception as e:
+            print(e)
+            exit(1)
+    except SystemExit:
+        cmd_help()
         exit(1)
 
 
