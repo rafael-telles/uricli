@@ -23,7 +23,7 @@ from PyInquirer import prompt
 from . import lib
 
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 
 def cmd_login():
@@ -70,12 +70,16 @@ def cmd_submit(arguments):
 
 def main():
     arguments = docopt(__doc__, version=__version__)
-    if arguments["login"]:
-        cmd_login()
-    elif arguments["set_language"]:
-        cmd_set_language()
-    elif arguments["submit"]:
-        cmd_submit(arguments)
+    try:
+        if arguments["login"]:
+            cmd_login()
+        elif arguments["set_language"]:
+            cmd_set_language()
+        elif arguments["submit"]:
+            cmd_submit(arguments)
+    except Exception as e:
+        print(e)
+        exit(1)
 
 
 if __name__ == "__main__":

@@ -67,6 +67,7 @@ def set_login(email, password):
     with shelve.open(SHELVE_PATH) as db:
         db['email'] = email
         db['password'] = password
+        del db['cookies']
         db.sync()
 
 
