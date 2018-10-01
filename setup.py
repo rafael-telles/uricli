@@ -34,5 +34,5 @@ setup(
         "demjson==2.2.4",
         "websocket-client==0.53.0"
     ],
-    url="https://github.com/rafael-telles/uri-cli",
+    url="https://github.com/rafael-telles/uricli",
 )

@@ -23,7 +23,7 @@ from . import lib
 from .live import LiveSession
 
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 def cmd_login():
@@ -88,6 +88,7 @@ def main():
     except SystemExit:
         cmd_help()
         exit(1)
+        return
 
     try:
         if arguments["login"]:
