@@ -29,7 +29,7 @@ setup(
     install_requires=[
         "docopt==0.6.2",
         "PyInquirer==1.0.2",
-        "requests==2.19.1",
+        "requests==2.20.0",
         "mechanicalSoup==0.11.0",
         "demjson==2.2.4",
         "websocket-client==0.53.0"
